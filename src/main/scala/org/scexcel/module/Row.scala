@@ -13,7 +13,7 @@ import scala.collection.immutable.VectorBuilder
   * @tparam A
   */
 
-case class Row[A]  (val elements: Vector[A]) extends IndexedSeq[A] with IndexedSeqLike[A, Row[A]]  {
+case class Row[+A]  (val elements: Vector[A]) extends IndexedSeq[A] with IndexedSeqLike[A, Row[A]]  {
 
   import Row._
 
