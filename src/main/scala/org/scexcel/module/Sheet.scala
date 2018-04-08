@@ -15,7 +15,7 @@ import scala.collection.immutable.VectorBuilder
   * @tparam A
   */
 
-case class Sheet[+A] private (val elements: Vector[Row[A]]) extends IndexedSeq[Row[A]] with IndexedSeqLike[Row[A], Sheet[A]] {
+case class Sheet[+A]  (val elements: Vector[Row[A]]) extends IndexedSeq[Row[A]] with IndexedSeqLike[Row[A], Sheet[A]] {
 
   import Sheet._
 
@@ -24,7 +24,18 @@ case class Sheet[+A] private (val elements: Vector[Row[A]]) extends IndexedSeq[R
   def length :Int= elements.length
   def apply(idx:Int):Row[A]=if (idx <0 || idx >length) throw new IndexOutOfBoundsException else elements(idx)
   def apply(column: Int,row:Int):A= elements(column)(row)
+  def apply(seq:Vector[(Int,Int)]): Vector[A] = (for (e<-seq) yield this.apply(e._1,e._2)).toVector
+
+  def getIndicesOf[A](keys: A*): Vector[Option[(Int,Int)]]={
+     val indices: Seq[Option[(Int, Int)]] = for(k<-keys; e<-this.elements) yield {
+      if (e.contains(k)) Some((this.elements.indexOf(e),e.indexOf(k) ))
+      else None
+    }
+    indices.toVector
+  }
 }
+
+
 /** Factory for [[org.scexcel.module.Sheet]] instance*/
 object Sheet{
   def fromSeq[A](buff:Vector[Row[A]]):Sheet[A]=new Sheet(buff)
@@ -34,8 +45,8 @@ object Sheet{
 
   implicit def canBuildFrom[A]: CanBuildFrom[Sheet[A],Row[A],Sheet[A]]={
     new CanBuildFrom[Sheet[A],Row[A],Sheet[A]] {
-      def apply():Builder[Row[A],Sheet[A]]=newBuilder
-      def apply(from: Sheet[A]):Builder[Row[A],Sheet[A]]=newBuilder
+      def apply(): Builder[Row[A], Sheet[A]] = newBuilder
+      def apply(from: Sheet[A]): Builder[Row[A], Sheet[A]] = newBuilder
     }
   }
 
