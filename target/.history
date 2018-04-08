@@ -1,0 +1,19 @@
+compile
+console
+compile
+console
+compile
+clean
+compile
+console
+compile
+~compile
+console
+:q
+compile
+console*
+console
+val test1=List(1,2,3)
+console
+compile
+console
