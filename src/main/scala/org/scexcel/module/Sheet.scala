@@ -15,7 +15,7 @@ import scala.collection.immutable.VectorBuilder
   * @tparam A
   */
 
-case class Sheet[A] private (val elements: Vector[Row[A]]) extends IndexedSeq[Row[A]] with IndexedSeqLike[Row[A], Sheet[A]] {
+case class Sheet[+A] private (val elements: Vector[Row[A]]) extends IndexedSeq[Row[A]] with IndexedSeqLike[Row[A], Sheet[A]] {
 
   import Sheet._
 
