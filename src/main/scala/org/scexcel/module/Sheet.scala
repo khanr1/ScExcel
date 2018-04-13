@@ -26,6 +26,8 @@ case class Sheet[+A]  (val elements: Vector[Row[A]]) extends IndexedSeq[Row[A]] 
   def apply(column: Int,row:Int):A= elements(column)(row)
   def apply(seq:Vector[(Int,Int)]): Vector[A] = (for (e<-seq) yield this.apply(e._1,e._2)).toVector
 
+
+
   def getIndicesOf[A](keys: A*): Vector[Option[(Int,Int)]]={
      val indices: Seq[Option[(Int, Int)]] = for(k<-keys; e<-this.elements) yield {
       if (e.contains(k)) Some((this.elements.indexOf(e),e.indexOf(k) ))

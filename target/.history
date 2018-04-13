@@ -17,3 +17,5 @@ val test1=List(1,2,3)
 console
 compile
 console
+compile
+console

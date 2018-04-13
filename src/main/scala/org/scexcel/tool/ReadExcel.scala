@@ -25,7 +25,7 @@ object ReadExcel {
   def getMaxNumberOfColumn(sheet:XSSFSheet): Int={
 
     val listNumberOfColumnInRow: List[Int] = (for(row <- sheet.rowIterator().asScala) yield row.getPhysicalNumberOfCells).toList
-    listNumberOfColumnInRow.max
+    List(listNumberOfColumnInRow.max,2).max
   }
 
   /**
